@@ -1,21 +1,25 @@
 <?php
-header('Content-Type: aplication/json');
 include 'database.php';
 
-$data = json_decode(file_get_contents('php://input'), true);
+$data = json_decode(file_get_contents("php://input"), true);
 
-if(isset($data['nome'])){
+if(isset($data['nome']) && !empty($data['nome'])) {
     $nome = $data['nome'];
 
-    $sql = "INSERT INTO frutas (nome) VALUES ($nome)";
+    $sql = "INSERT INTO frutas (nome) VALUES (?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $nome);
 
-    if($conn->query($sql) === TRUE) {
-        echo json_encode(['message' => 'Fruta adicionada com sucesso']);
+    if($stmt->execute()) {
+        http_response_code(201);
+        echo json_encode(['message' => 'Fruta cadastrada com sucesso!']);
     } else {
-        echo json_encode(['message' => 'Erro ao adicionar fruta']);
+        http_response_code(500);
+        echo json_encode(['message' => 'Erro ao cadastrar a fruta.']);
     }
 } else {
-    echo json_encode(['message'=>'Nome da fruta não fornecido']);
+    http_response_code(400);
+    echo json_encode(['message' => 'Nome da fruta não foi enviado.']);
 }
 
 $conn->close();
