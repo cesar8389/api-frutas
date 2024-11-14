@@ -32,11 +32,42 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <head>
     <title>Cadastro de fruta</title>
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background: #f6c653;
+        }
+
+        h1 {
+            color: #66cdaa;
+            white-space: nowrap;
+        }
+
+        label {
+            padding-right: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 310px;
+            height: 200px;
+            align-content: space-around;
+            background-color: #ffffff4a;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Cadastro de frutas</h1>
     <form method="POST" action="">
+        <h1>Cadastro de frutas</h1>
         <label for="nome">Nome da fruta:</label>
         <input type="text" id="nome" name="nome" required>
 
